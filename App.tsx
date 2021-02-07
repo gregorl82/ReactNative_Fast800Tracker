@@ -1,7 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, SettingsScreen } from "./screens";
+import {
+  HomeScreen,
+  PlannerScreen,
+  SettingsScreen,
+  RecipesScreen,
+  TrackerScreen,
+} from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -16,6 +22,12 @@ export default function App() {
             let iconName;
             if (route.name === "Home") {
               iconName = focused ? "home" : "home-outline";
+            } else if (route.name === "Planner") {
+              iconName = focused ? "documents" : "documents-outline";
+            } else if (route.name === "Tracker") {
+              iconName = focused ? "analytics" : "analytics-outline";
+            } else if (route.name === "Recipes") {
+              iconName = focused ? "restaurant" : "restaurant-outline";
             } else if (route.name === "Settings") {
               iconName = focused ? "settings" : "settings-outline";
             } else {
@@ -30,6 +42,9 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Planner" component={PlannerScreen} />
+        <Tab.Screen name="Tracker" component={TrackerScreen} />
+        <Tab.Screen name="Recipes" component={RecipesScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
