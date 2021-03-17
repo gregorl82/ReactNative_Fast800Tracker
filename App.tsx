@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import {
   HomeScreen,
   PlannerScreen,
@@ -8,45 +8,99 @@ import {
   RecipesScreen,
   TrackerScreen,
 } from "./screens";
-import { Ionicons } from "@expo/vector-icons";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Tab = createBottomTabNavigator();
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#3498db",
+    accent: "#f1c40f",
+  },
+};
+
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, focused, size }) => {
-            let iconName;
-            if (route.name === "Home") {
-              iconName = focused ? "home" : "home-outline";
-            } else if (route.name === "Planner") {
-              iconName = focused ? "documents" : "documents-outline";
-            } else if (route.name === "Tracker") {
-              iconName = focused ? "analytics" : "analytics-outline";
-            } else if (route.name === "Recipes") {
-              iconName = focused ? "restaurant" : "restaurant-outline";
-            } else if (route.name === "Settings") {
-              iconName = focused ? "settings" : "settings-outline";
-            } else {
-              iconName = "";
-            }
-            return <Ionicons name={iconName} color={color} size={size} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: "darkgreen",
-          inactiveTintColor: "gray",
-        }}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Planner" component={PlannerScreen} />
-        <Tab.Screen name="Tracker" component={TrackerScreen} />
-        <Tab.Screen name="Recipes" component={RecipesScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName="Home">
+          <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarLabel: "Home",
+              tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons
+                  name={focused ? "home" : "home-outline"}
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Tracker"
+            component={TrackerScreen}
+            options={{
+              tabBarLabel: "Tracker",
+              tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons
+                  name={focused ? "file-chart" : "file-chart-outline"}
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Planner"
+            component={PlannerScreen}
+            options={{
+              tabBarLabel: "Planner",
+              tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons
+                  name={
+                    focused ? "calendar-refresh" : "calendar-refresh-outline"
+                  }
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Recipes"
+            component={RecipesScreen}
+            options={{
+              tabBarLabel: "Recipes",
+              tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons
+                  name={focused ? "food-apple" : "food-apple-outline"}
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{
+              tabBarLabel: "Settings",
+              tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons
+                  name={focused ? "cog" : "cog-outline"}
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
